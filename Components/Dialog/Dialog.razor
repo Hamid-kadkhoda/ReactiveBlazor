@@ -1,0 +1,40 @@
+﻿@namespace ReactiveBlazor.Components.Dialog
+
+@inherits DialogBase
+
+@if (Visibility)
+{
+    <div class="dialog-backdrop">
+        <div class="@visibilityStyleClass dialog">
+            <div class="dialog-header">
+                @if (HeaderContent != null)
+                {
+                    @HeaderContent
+                }
+                else
+                {
+                    <div class="flex justify-content-between">
+                        <h3>@Header</h3>
+                        <button @onclick="@(async () => await OnCloseButtonClicked())">
+                            <CloseIcon />
+                        </button>
+                    </div>
+                }
+            </div>
+            <div class="dialog-content">
+                @ChildContent
+            </div>
+            @if (FooterContent != null)
+            {
+                <div class="dialog-footer">
+                    @FooterContent
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+
+
+}

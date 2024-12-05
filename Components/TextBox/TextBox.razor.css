@@ -1,0 +1,14 @@
+﻿
+
+.text-box {
+    display: flex;
+    flex-direction: column;
+}
+
+    .text-box label {
+        font-size: small;
+    }
+
+    .text-box input {
+        padding: 4px 8px;
+    }

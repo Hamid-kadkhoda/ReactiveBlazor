@@ -1,0 +1,19 @@
+﻿@namespace ReactiveBlazor.Components.Input
+
+@inherits BaseInput
+
+
+<div class="text-box">
+    <label>
+        @Label
+        @if (Required)
+        {
+            <sup class="text-red-500">*</sup>
+        }
+    </label>
+    <input title="@Title" maxlength="@MaxLength" @bind="@Value" />
+</div>
+
+@code {
+
+}

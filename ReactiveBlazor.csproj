@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
+		<PackageReference Include="System.Reactive" />
+		<PackageReference Include="System.Reactive.Core" />
+		<PackageReference Include="System.Reactive.Interfaces" />
+		<PackageReference Include="System.Reactive.Linq" />
+	</ItemGroup>
+
+</Project>

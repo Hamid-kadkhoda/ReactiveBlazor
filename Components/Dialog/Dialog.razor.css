@@ -1,0 +1,48 @@
+﻿
+
+.dialog-backdrop {
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    display: flex;
+    transition: all 200ms;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    background-color: rgba(0,0,0,0.3);
+}
+
+    .dialog-backdrop .dialog {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        background-color: #fff;
+        width: 95%;
+        transition: all 250ms ease-in-out;
+        max-width: 550px;
+        border-radius: 0.4rem;
+    }
+
+        .dialog-backdrop .dialog .dialog-header {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .dialog-backdrop .dialog .dialog-content {
+            padding: 1rem;
+        }
+
+        .dialog-backdrop .dialog .dialog-footer {
+            padding: 0.7rem 1rem;
+            border-top: 1px solid #dedede;
+        }
+
+.dialog-close {
+    scale: 0.2;
+    opacity: 0;
+}
+
+.dialog-open {
+    scale: 1;
+    opacity: 1;
+}
+

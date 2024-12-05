@@ -1,0 +1,22 @@
+﻿
+
+@page "/"
+
+@inject IHttpClientBase http
+
+<PageTitle>Home</PageTitle>
+
+<button @onclick="() => visible = true" >Open dialog</button>
+
+<Dialog Header="Create" @bind-Visibility="@visible">
+
+</Dialog>
+
+@code {
+    public bool visible { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await http.SendAsync<object>(new GetIpRequest());
+    }
+}
