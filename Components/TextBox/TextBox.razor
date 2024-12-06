@@ -11,7 +11,11 @@
             <sup class="text-red-500">*</sup>
         }
     </label>
-    <input @oninput="@SetValue" placeholder="@Placeholder" title="@Title" maxlength="@MaxLength" @bind="@Value" />
+    <input @oninput="@SetValue"
+           placeholder="@Placeholder"
+           title="@Title"
+           maxlength="@MaxLength"
+           @bind="@Value" />
 </div>
 
 @code {

@@ -5,7 +5,7 @@ namespace System.Net.Http;
 
 public class HttpClientBase(HttpClient http): IHttpClientBase
 {
-    public async Task<HttpResponseMessage> SendAsync<T>(IRequest req)
+    public async Task<T?> SendAsync<T>(IRequest req)
     {
         try
         {
@@ -43,7 +43,11 @@ public class HttpClientBase(HttpClient http): IHttpClientBase
                 request.Content = content;
             }
 
-            return await http.SendAsync(request);
+            var response = await http.SendAsync(request);
+
+            var context = await response.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<T>(context);
         }
         catch
         {

@@ -10,7 +10,7 @@ public abstract class DialogBase : BaseComponent
 
     [Parameter] public RenderFragment? FooterContent { get; set; }
 
-    protected string visibilityStyleClass = "dialog-close";
+    protected string visibilityStyleClass = "";
 
     private bool visibility = false;
 
@@ -23,23 +23,7 @@ public abstract class DialogBase : BaseComponent
             if (visibility != value)
             {
                 visibility = value;
-                HandleVisibilityChange(value).ConfigureAwait(true);
             }
-        }
-    }
-
-    private async Task HandleVisibilityChange(bool value)
-    {
-        if (value)
-        {
-            await Task.Delay(200);
-            visibilityStyleClass = "dialog-open";
-            await InvokeAsync(StateHasChanged);
-        }
-        else
-        {
-            visibilityStyleClass = "dialog-close";
-            await Task.Delay(200);
         }
     }
 
@@ -47,7 +31,6 @@ public abstract class DialogBase : BaseComponent
 
     public async Task OnCloseButtonClicked()
     {
-        await HandleVisibilityChange(false);
         Visibility = false;
         await VisibilityChanged.InvokeAsync(Visibility);
     }

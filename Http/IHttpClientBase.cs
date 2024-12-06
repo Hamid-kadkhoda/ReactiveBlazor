@@ -2,5 +2,5 @@
 
 public interface IHttpClientBase: IScoped
 {
-    Task<HttpResponseMessage> SendAsync<T>(IRequest req);
+    Task<T?> SendAsync<T>(IRequest req);
 }
