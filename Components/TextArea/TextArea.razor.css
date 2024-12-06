@@ -11,7 +11,7 @@
         font-size: medium;
     }
 
-    .text-box input {
+    .text-box textarea {
         padding: 6px 8px;
         border-radius: 4px;
         transition: all 100ms;
@@ -19,6 +19,6 @@
         border: 1px solid var(--gray-400);
     }
 
-        .text-box input:focus {
+        .text-box textarea:focus {
             border: 1px solid var(--blue-400);
         }

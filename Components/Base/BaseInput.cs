@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace ReactiveBlazor.Components.Input;
+namespace ReactiveBlazor.Components.Base;
 
 public abstract class BaseInput : BaseComponent
 {
@@ -8,31 +8,15 @@ public abstract class BaseInput : BaseComponent
 
     [Parameter] public string? Label { get; set; }
 
+    [Parameter] public string? Placeholder { get; set; }
+
     [Parameter] public int? MaxLength { get; set; }
 
     [Parameter] public int? MinLength { get; set; }
 
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
 
-    private string? value;
-
-    [Parameter] public string? Value
-    {
-        get
-        {
-            return value;
-        }
-        set
-        {
-            if (!EqualityComparer<string?>.Default.Equals(value, Value))
-            {
-                Value = value;
-                ValueChanged.InvokeAsync(Value);
-            }
-        }
-
-    }
-
+    [Parameter] public string? Value { get; set; }
 
     public async Task SetValue(ChangeEventArgs args)
     {

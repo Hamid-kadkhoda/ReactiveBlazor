@@ -1,22 +1,27 @@
-﻿
-
-@page "/"
+﻿@page "/"
 
 @inject IHttpClientBase http
 
 <PageTitle>Home</PageTitle>
 
-<button @onclick="() => visible = true" >Open dialog</button>
+<button @onclick="() => visible = true">Open dialog</button>
 
 <Dialog Header="Create" @bind-Visibility="@visible">
-
+    <FlexLayout Spacing="3" Vertical Full>
+        <TextBox @bind-Value=@Name Required Label="Title" />
+        <TextArea @bind-Value=@Desc Required Label="Description" />
+    </FlexLayout>
 </Dialog>
 
 @code {
-    public bool visible { get; set; } = false;
+    public bool visible { get; set; } = true;
+
+    public string? Name { get; set; }
+
+    public string? Desc { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         var response = await http.SendAsync<object>(new GetIpRequest());
     }
-}
+} 

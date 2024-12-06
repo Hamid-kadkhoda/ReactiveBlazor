@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace ReactiveBlazor.Components.Dialog;
+namespace ReactiveBlazor.Components.Base;
 
 public abstract class DialogBase : BaseComponent
 {

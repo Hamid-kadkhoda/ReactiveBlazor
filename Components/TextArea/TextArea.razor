@@ -1,0 +1,26 @@
+﻿@namespace ReactiveBlazor.Components.Input
+
+@inherits BaseInput
+
+
+<div class="text-box">
+    <label>
+        @Label
+        @if (Required)
+        {
+            <sup class="text-red-500">*</sup>
+        }
+    </label>
+    <textarea @oninput="@SetValue"
+              placeholder="@Placeholder"
+              title="@Title"
+              rows="@Rows"
+              maxlength="@MaxLength"
+              @bind="@Value">
+    </textarea>
+</div>
+
+@code {
+
+    [Parameter] public int Rows { get; set; } = 3;
+}
