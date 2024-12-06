@@ -22,8 +22,6 @@ obj/
 # Ignore logs
 *.log
 
-# Ignore publish outputs
-wwwroot/
 
 # Ignore package manager directories
 node_modules/ 
