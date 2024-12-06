@@ -1,0 +1,54 @@
+﻿
+
+button {
+    padding: 8px 12px;
+    transition: all 150ms ease-in-out;
+    width: fit-content;
+    border-radius: 4px;
+    outline: none;
+}
+
+    button:focus {
+    }
+
+    button:active {
+        transform: scale(0.96);
+    }
+
+    button:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+.primary-button {
+    color: #fff;
+    background-color: var(--blue-500);
+}
+
+.primary-button:hover {
+    color: #fff;
+    background-color: var(--blue-700);
+}
+
+.warning-button {
+    color: #fff;
+    background-color: var(--blue-500);
+}
+
+
+.info-button {
+    color: #fff;
+    background-color: var(--blue-500);
+}
+
+
+.danger-button {
+    color: #fff;
+    background-color: var(--red-600);
+}
+
+
+.secondary-button {
+    color: #fff;
+    background-color: var(--blue-500);
+}

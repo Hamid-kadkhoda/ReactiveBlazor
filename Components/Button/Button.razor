@@ -1,0 +1,22 @@
+﻿@namespace ReactiveBlazor.Components.Button
+
+@inherits ButtonBase
+
+<button style="@Style"
+        class="@SeverityStyleClass @StyleClass"
+        disabled="@Disabled"
+        type="@typeAttribute"
+        @onclick="@(async () => await OnClick.InvokeAsync())">
+    @if (ChildContent != null)
+    {
+        @ChildContent
+    }
+    else
+    {
+        @Value
+    }
+</button>
+
+@code {
+
+}
