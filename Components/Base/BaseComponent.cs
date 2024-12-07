@@ -3,6 +3,8 @@
 namespace ReactiveBlazor.Components.Base;
 public abstract class BaseComponent : ComponentBase
 {
+    [Parameter] public string? Id { get; set; }
+
     [Parameter] public string? Style { get; set; }
 
     [Parameter] public string? StyleClass { get; set; }
