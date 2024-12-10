@@ -1,0 +1,110 @@
+﻿@using System.Reflection
+@using System.Linq.Expressions
+@typeparam TItem
+
+<div class="data-grid">
+    <table>
+        <thead>
+            <tr>
+                @foreach (var property in typeof(TItem).GetProperties())
+                {
+                    <th>
+                        <div class="column-header">
+                            @property.Name
+                            <button @onclick="() => SortBy(property.Name)">Sort</button>
+                            <input type="text"
+                                   @oninput="(e) => FilterBy(property.Name, e.Value?.ToString())"
+                                   placeholder="Filter..." />
+                        </div>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in FilteredAndSortedItems)
+            {
+                <tr>
+                    @foreach (var property in typeof(TItem).GetProperties())
+                    {
+                        <td>@property.GetValue(item)</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    [Parameter] public IEnumerable<TItem> Items { get; set; } = [];
+
+    private IEnumerable<TItem> FilteredAndSortedItems => ApplySortingAndFiltering(Items);
+
+    private Dictionary<string, string> Filters { get; set; } = new Dictionary<string, string>();
+
+    private string? SortColumn { get; set; }
+
+    private bool SortAscending { get; set; } = true;
+
+    private void SortBy(string columnName)
+    {
+        if (SortColumn == columnName)
+        {
+            SortAscending = !SortAscending;
+        }
+        else
+        {
+            SortColumn = columnName;
+            SortAscending = true;
+        }
+        StateHasChanged();
+    }
+
+    private void FilterBy(string columnName, string? filterValue)
+    {
+        if (string.IsNullOrWhiteSpace(filterValue))
+        {
+            Filters.Remove(columnName);
+        }
+        else
+        {
+            Filters[columnName] = filterValue;
+        }
+        StateHasChanged();
+    }
+
+    private IEnumerable<TItem> ApplySortingAndFiltering(IEnumerable<TItem> items)
+    {
+        var query = items.AsQueryable();
+
+        foreach (var filter in Filters)
+        {
+            var property = typeof(TItem).GetProperty(filter.Key);
+            if (property != null)
+            {
+                var parameter = Expression.Parameter(typeof(TItem), "x");
+                var propertyAccess = Expression.Property(parameter, property);
+                var constant = Expression.Constant(filter.Value, typeof(string));
+                var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                var containsExpression = Expression.Call(propertyAccess, containsMethod!, constant);
+                var lambda = Expression.Lambda<Func<TItem, bool>>(containsExpression, parameter);
+                query = query.Where(lambda);
+            }
+        }
+
+        if (!string.IsNullOrEmpty(SortColumn))
+        {
+            var property = typeof(TItem).GetProperty(SortColumn);
+            if (property != null)
+            {
+                var parameter = Expression.Parameter(typeof(TItem), "x");
+                var propertyAccess = Expression.Property(parameter, property);
+                var lambda = Expression.Lambda<Func<TItem, object>>(Expression.Convert(propertyAccess, typeof(object)), parameter);
+
+                query = SortAscending ? query.OrderBy(lambda) : query.OrderByDescending(lambda);
+            }
+        }
+
+        return query.ToList();
+    }
+}
