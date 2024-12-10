@@ -1,0 +1,39 @@
+﻿@namespace ReactiveBlazor.Components.Message
+
+@inherits BaseComponent
+
+<div style="@Style" class="@StyleClass @SeverityStyleClass message">
+    <div class="message-content">
+        <span class="message-text"></span>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public string? Text { get; set; }
+
+    protected SeverityType type = SeverityType.Success;
+
+    protected string SeverityStyleClass { get; set; } = "message-success";
+
+    [Parameter]
+    public SeverityType Severity
+    {
+        get => type;
+        set
+        {
+            {
+                SeverityStyleClass = value switch
+                {
+                    SeverityType.Primary => "message-primary",
+                    SeverityType.Danger => "message-danger",
+                    SeverityType.Info => "message-info",
+                    SeverityType.Success => "message-success",
+                    SeverityType.Warning => "message-warning",
+                    SeverityType.Secondary => "message-secondary",
+                    _ => "message-success",
+                };
+            }
+        }
+    }
+}
