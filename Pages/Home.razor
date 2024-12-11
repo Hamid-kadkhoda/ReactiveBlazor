@@ -1,7 +1,9 @@
 ﻿@page "/"
 
-@* <PageTitle>Home</PageTitle> *@
+<PageTitle>Home</PageTitle>
 
 @code {
+
+    [Inject] private IToastService service { get; set; } = default!;
 
 } 

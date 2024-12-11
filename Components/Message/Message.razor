@@ -4,13 +4,40 @@
 
 <div style="@Style" class="@StyleClass @SeverityStyleClass message">
     <div class="message-content">
-        <span class="message-text"></span>
+        <span class="message-text">@Text</span>
+        <span class="message-summery">@Summery</span>
     </div>
 </div>
 
 @code {
 
-    [Parameter] public string? Text { get; set; }
+    [Parameter] public Guid Key { get; set; }
+
+    [Parameter] public string Text { get; set; } = null!;
+
+    [Parameter] public string? Summery { get; set; }
+
+    private int life;
+
+    [Parameter]
+    public int Life
+    {
+        get => life;
+        set
+        {
+            if (value > 0 && value != life)
+            {
+                life = value;
+                InvokeAsync(async () =>
+                {
+                    await Task.Delay(value);
+                    await OnLifeEnded.InvokeAsync(Key);
+                });
+            }
+        }
+    }
+
+    [Parameter] public EventCallback<Guid> OnLifeEnded { get; set; }
 
     protected SeverityType type = SeverityType.Success;
 
@@ -31,6 +58,7 @@
                     SeverityType.Success => "message-success",
                     SeverityType.Warning => "message-warning",
                     SeverityType.Secondary => "message-secondary",
+                    SeverityType.Contrast => "message-contrast",
                     _ => "message-success",
                 };
             }

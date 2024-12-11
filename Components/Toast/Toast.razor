@@ -1,7 +1,64 @@
 ﻿@namespace ReactiveBlazor.Components.Toast
 
+<style>
+    section.toast {
+        margin: 1.5rem;
+        display: flex;
+        position: fixed;
+        flex-direction: column;
+        gap: 1rem;
+    }
+</style>
 
+<section class="@positionStyleClass toast">
+    @foreach (var message in service.GetValues())
+    {
+        <Message Severity="@message.Type"
+                 Summery="@message.Summery"
+                 OnLifeEnded="@OnRemoveMessage"
+                 Text="@message.Text"
+                 Life="@message.Life">
+        </Message>
+    }
+</section>
 
 @code {
 
+    [Inject] private IToastService service { get; set; } = default!;
+
+    private PositionType position = PositionType.BottomRight;
+
+    public string positionStyleClass { get; set; } = "bottom-0 right-0";
+
+    [Parameter]
+    public PositionType Position
+    {
+        get => position;
+        set
+        {
+            if (position != value)
+            {
+
+                position = value;
+                positionStyleClass = value switch
+                {
+                    PositionType.TopLeft => "top-0 left-0",
+                    PositionType.TopRight => "top-0 right-0",
+                    PositionType.BottomLeft => "bottom-0 left-0",
+                    PositionType.BottomRight => "bottom-0 right-0",
+                    _ => "bottom-0 right-0",
+                };
+            }
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        service.ItemsChanged += StateHasChanged;
+    }
+
+    private void OnRemoveMessage(Guid key)
+    {
+        service.RemoveMessage(key);
+    }
 }

@@ -1,15 +1,60 @@
 ﻿
 .message {
+    padding: 8px 12px;
     border-radius: 6px;
+    width: 30rem;
 }
 
 .message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
 }
 
-
 .message-text {
+    color: var(--text-color) !important;
+    font-weight: 700;
+}
+
+.message-summery {
+    font-weight: 700;
 }
 
 .message-avatar {
 }
 
+.message-success {
+    background-color: var(--green-100);
+    color: var(--green-600);
+    border: 1px solid var(--green-400);
+}
+
+.message-primary {
+    background-color: var(--blue-100);
+    color: var(--blue-600);
+    border: 1px solid var(--blue-400);
+}
+
+.message-info {
+    background-color: var(--cyan-100);
+    color: var(--cyan-600);
+    border: 1px solid var(--cyan-400);
+}
+
+.message-warning {
+    background-color: var(--yellow-100);
+    color: var(--yellow-600);
+    border: 1px solid var(--yellow-400);
+}
+
+.message-danger {
+    background-color: var(--red-100);
+    color: var(--red-600);
+    border: 1px solid var(--red-400);
+}
+
+.message-contrast {
+    background-color: var(--gray-100);
+    color: var(--gray-600);
+    border: 1px solid var(--gray-400);
+}

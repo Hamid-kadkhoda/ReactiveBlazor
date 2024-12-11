@@ -1,16 +1,9 @@
 ﻿@namespace ReactiveBlazor.Layout
 
-@inherits BaseComponent
+@inherits LayoutBase
 
-<div class="flex gap-@Spacing @(Vertical ? "flex-column" : "align-items-center") @(Full ? "w-full" : "")">
+<div class="flex gap-@Spacing 
+@(Vertical ? "flex-column" : "align-items-center") 
+@(Full ? "w-full" : "")">
     @ChildContent
 </div>
-
-@code {
-
-    [Parameter] public string Spacing { get; set; } = "1";
-
-    [Parameter] public bool Vertical { get; set; } = false;
-
-    [Parameter] public bool Full { get; set; } = false;
-}
