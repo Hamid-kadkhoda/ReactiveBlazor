@@ -1,14 +1,13 @@
-﻿using System.Collections.ObjectModel;
-
+﻿
 namespace ReactiveBlazor.Components.Toast;
 
-public interface IToastService : ISingleton
+public interface IToastService : ISingleton, IDisposable
 {
     List<ToastMessage> GetValues();
 
     event Action? ItemsChanged;
 
-    void Show();
+    void Show(ToastMessage message);
 
     void RemoveMessage(Guid key);
 }

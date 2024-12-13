@@ -11,22 +11,25 @@ public class ToastService : IToastService
 
     public List<ToastMessage> GetValues() => Messages;
 
-    public void Show()
+    public void Show(ToastMessage message)
     {
-        var message = new ToastMessage() { Text = "Text", Summery = "This is a Summery" };
-
         Add(message);
-        NotifyItemsChanged();
     }
 
     private void Add(ToastMessage message)
     {
         Messages.Add(message);
+        NotifyItemsChanged();
     }
 
     public void RemoveMessage(Guid key)
     {
         var stack = Messages.First(x => x.Key == key);
         Messages.Remove(stack);
+    }
+
+    public void Dispose()
+    {
+        // implement logic
     }
 }

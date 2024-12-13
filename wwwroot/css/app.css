@@ -18,6 +18,8 @@ h1,h2,h3,h4,h5,h6 {
 button {
     border: none;
     display: flex;
+    height: max-content;
+    width: max-content;
     align-items: center;
     justify-content: center;
     outline: none;

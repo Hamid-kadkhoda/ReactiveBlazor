@@ -1,0 +1,25 @@
+﻿
+
+.refresh-view {
+    position: relative;
+    border: 1px solid #dedede;
+    width: 100%;
+    height: 40rem;
+    display: flex;
+    justify-content: center;
+}
+
+.refresh-view-button {
+    position: absolute;
+    transition: transform 0.2s ease;
+}
+
+.spinner {
+    transform: rotate(-90deg); /* Start from top */
+}
+
+.spinner-path {
+    stroke-dasharray: 125.6; /* 2 * PI * radius */
+    stroke-dashoffset: 125.6; /* Initially empty */
+    transition: stroke-dashoffset 0.1s ease;
+}

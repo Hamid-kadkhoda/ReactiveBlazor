@@ -1,0 +1,22 @@
+﻿@namespace ReactiveBlazor.Components
+
+@inherits BaseComponent
+
+<div class="refresh-view">
+    <button accesskey="r" class="refresh-view-button">
+        refresh
+    </button>
+    @ChildContent
+</div>
+
+@code {
+
+    [Parameter] public EventCallback OnRefresh { get; set; }
+
+    [Parameter] public bool IsRefreshing { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Path = "/Views/RefreshView/RefreshView.razor.js";
+    }
+}
