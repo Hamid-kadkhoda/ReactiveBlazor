@@ -2,33 +2,64 @@
 
 @inherits BaseComponent
 
-<style>
-    .context-menu {
-        width: 100%;
-        height: 100vh;
-        z-index: -1;
-        position: fixed;
-        top: 0;
-        left: 0;
-    }
-</style>
-
 <div @oncontextmenu:preventDefault
-@oncontextmenu:stopPropagation
-     @onclick="@Context"
+     @oncontextmenu="@OnContext"
+     @onclick="@OnClick"
      role="contentinfo"
      class="context-menu">
-    <div class="context-menu-content">
-        @ChildContent
-    </div>
+    @if (Visibility)
+    {
+        <div style="@positionStyle"
+             class="context-menu-content">
+            @ChildContent
+        </div>
+    }
 </div>
 
 @code {
 
-    private void Context(MouseEventArgs args)
+    [Parameter] public bool Click { get; set; }
+
+    [Parameter] public bool Visibility { get; set; }
+
+    [Parameter] public EventCallback<bool> VisibilityChanged { get; set; }
+
+    private string positionStyle { get; set; } = string.Empty;
+
+    private void OnContext(MouseEventArgs args)
     {
-        Console.WriteLine(args.ClientX);
-        Console.WriteLine(args.ClientY);
+        if (!Click)
+        {
+            SetVisibility(true);
+            SetPositionStyle(args);
+        }
+        else
+        {
+            SetVisibility(false);
+        }
     }
 
+    private void OnClick(MouseEventArgs args)
+    {
+        if (Click)
+        {
+            SetVisibility(true);
+            SetPositionStyle(args);
+        }
+        else
+        {
+            SetVisibility(false);
+        }
+    }
+
+    private void SetPositionStyle(MouseEventArgs args)
+    {
+        positionStyle = $"left: {args.ClientX}px;top: {args.ClientY}px";
+    }
+
+    private void SetVisibility(bool value)
+    {
+        Visibility = value;
+        VisibilityChanged.InvokeAsync(Visibility);
+    }
 }
