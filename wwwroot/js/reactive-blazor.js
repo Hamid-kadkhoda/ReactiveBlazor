@@ -1,15 +1,18 @@
 ﻿
 
-function RenderNewCanvasChart(identifier) {
+async function RenderNewCanvasChart(identifier, labels, dataset,label = "") {
+
+    await setTimeout(() => { }, 0);
+
     const ctx = document.getElementById(`${identifier}`);
 
-    new Chart(ctx, {
-        type: 'bar',
+    let chart = new Chart(ctx, {
+        type: 'radar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: labels,
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: label, 
+                data: dataset,
                 borderWidth: 1
             }]
         },
@@ -21,4 +24,6 @@ function RenderNewCanvasChart(identifier) {
             }
         }
     });
-}
+
+    console.log(chart)
+} 

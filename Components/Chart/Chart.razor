@@ -2,28 +2,55 @@
 
 @inherits BaseComponent
 
-<div class="chart">
+@typeparam TXDataSet
+
+@typeparam TYDataSet
+
+<div style="@Style width: @Width;" class="@StyleClass chart">
     <canvas id="@Key"></canvas>
 </div>
 
 @code {
-    private string? label;
 
-    [Parameter]
-    public string? Label
+    [Parameter] public string? Label { get; set; }
+
+    [Parameter] public string? Width { get; set; }
+
+    [Parameter] public ChartType? Type { get; set; }
+
+    [Parameter, EditorRequired] public Func<TXDataSet, object>? XDataSelector { get; set; }
+
+    [Parameter, EditorRequired] public Func<TYDataSet, object>? YDataSelector { get; set; }
+
+    [Parameter] public ICollection<TXDataSet>? XDataSet { get; set; }
+
+    [Parameter] public ICollection<TYDataSet>? YDataSet { get; set; }
+
+    protected override async Task OnParametersSetAsync()
     {
-        get => label;
-        set
+        await RenderAsync();
+    }
+
+    private async Task RenderAsync()
+    {
+        object? labels = Array.Empty<object>();
+        object? dataset = Array.Empty<object>();
+
+        if (XDataSelector != null)
         {
-            if (label != value)
-            {
-                label = value;
-                InvokeAsync(async () =>
-                {
-                    await JSRuntime!.InvokeVoidAsync("RenderNewCanvasChart", Key);
-                });
-            }
+            labels = XDataSet?.Select(XDataSelector).ToArray();
         }
+
+        if (YDataSelector != null)
+        {
+            dataset = YDataSet?.Select(YDataSelector).ToArray();
+        }
+
+        if (XDataSet != null && YDataSet != null && YDataSet.Count == XDataSet.Count)
+        {
+            await JSRuntime!.InvokeVoidAsync("RenderNewCanvasChart", Key, dataset, labels);
+        }
+
     }
 
 }

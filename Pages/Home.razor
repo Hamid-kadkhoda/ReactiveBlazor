@@ -2,14 +2,25 @@
 
 <PageTitle>Home</PageTitle>
 
-<Button OnClick="@SetLabel">Set chart label</Button>
-
-<Chart Label="@MyProperty"></Chart>
+<Chart TXDataSet="ChartData"
+       XDataSet="chartData"
+       YDataSelector="y => y.YValue"
+       XDataSelector="x => x.XValue"
+       YDataSet="chartData"
+       TYDataSet="ChartData">
+</Chart>
 
 @code {
-    public string? MyProperty { get; set; }
+    private List<ChartData> chartData = new()
+    {
+        new ChartData { XValue = 2020, YValue = 100 },
+        new ChartData { XValue = 2021, YValue = 200 },
+        new ChartData { XValue = 2022, YValue = 300 }
+    };
 
-    private void SetLabel() {
-        MyProperty = $"{DateTime.UtcNow}";
+    private class ChartData
+    {
+        public int XValue { get; set; }
+        public int YValue { get; set; }
     }
 }
