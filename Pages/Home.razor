@@ -1,3 +1,15 @@
 ﻿@page "/"
 
 <PageTitle>Home</PageTitle>
+
+<Button OnClick="@SetLabel">Set chart label</Button>
+
+<Chart Label="@MyProperty"></Chart>
+
+@code {
+    public string? MyProperty { get; set; }
+
+    private void SetLabel() {
+        MyProperty = $"{DateTime.UtcNow}";
+    }
+}

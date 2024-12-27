@@ -3,7 +3,7 @@
 	<ItemGroup>
 	  <Compile Include="Components\DataGrid\DataGrid.razor.css" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />

@@ -1,0 +1,29 @@
+﻿@namespace ReactiveBlazor
+
+@inherits BaseComponent
+
+<div class="chart">
+    <canvas id="@Key"></canvas>
+</div>
+
+@code {
+    private string? label;
+
+    [Parameter]
+    public string? Label
+    {
+        get => label;
+        set
+        {
+            if (label != value)
+            {
+                label = value;
+                InvokeAsync(async () =>
+                {
+                    await JSRuntime!.InvokeVoidAsync("RenderNewCanvasChart", Key);
+                });
+            }
+        }
+    }
+
+}
