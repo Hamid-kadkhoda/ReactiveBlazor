@@ -2,11 +2,11 @@
 
 public enum ChartType
 {
-    Bar,
-    Radar,
-    Line,
-    Scatter,
-    PolarArea,
-    Bubble,
-    Doughnut
+    bar,
+    radar,
+    line,
+    scatter,
+    polarArea,
+    bubble,
+    doughnut
 }

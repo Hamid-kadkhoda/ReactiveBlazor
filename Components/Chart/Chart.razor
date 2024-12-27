@@ -48,7 +48,7 @@
 
         if (XDataSet != null && YDataSet != null && YDataSet.Count == XDataSet.Count)
         {
-            await JSRuntime!.InvokeVoidAsync("RenderNewCanvasChart", Key, dataset, labels);
+            await JSRuntime!.InvokeVoidAsync("RenderNewCanvasChart", Key, dataset, labels, Label ?? "", Type.ToString() ?? "bar");
         }
 
     }

@@ -1,26 +1,3 @@
 ﻿@page "/"
 
 <PageTitle>Home</PageTitle>
-
-<Chart TXDataSet="ChartData"
-       XDataSet="chartData"
-       YDataSelector="y => y.YValue"
-       XDataSelector="x => x.XValue"
-       YDataSet="chartData"
-       TYDataSet="ChartData">
-</Chart>
-
-@code {
-    private List<ChartData> chartData = new()
-    {
-        new ChartData { XValue = 2020, YValue = 100 },
-        new ChartData { XValue = 2021, YValue = 200 },
-        new ChartData { XValue = 2022, YValue = 300 }
-    };
-
-    private class ChartData
-    {
-        public int XValue { get; set; }
-        public int YValue { get; set; }
-    }
-}
