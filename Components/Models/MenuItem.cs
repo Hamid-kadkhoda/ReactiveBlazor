@@ -1,4 +1,4 @@
-﻿namespace ReactiveBlazor.Components.Models;
+﻿namespace ReactiveBlazor;
 
 public class MenuItem
 {
@@ -27,6 +27,4 @@ public class MenuItem
     public string? Tooltip { get; set; }
 
     public bool Visible { get; set; } = true;
-
-    public string RouterLink { get; set; }
 }

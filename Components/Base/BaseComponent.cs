@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace ReactiveBlazor.Components.Base;
+namespace ReactiveBlazor;
 public abstract class BaseComponent : OwningComponentBase
 {
     [Inject] protected IJSRuntime JSRuntime { get; set; } = default!;

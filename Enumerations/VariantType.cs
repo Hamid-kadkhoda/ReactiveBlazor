@@ -1,4 +1,4 @@
-﻿namespace ReactiveBlazor.Enumerations;
+﻿namespace ReactiveBlazor;
 
 public enum VariantType
 {

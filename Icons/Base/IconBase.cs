@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace ReactiveBlazor.Components.Icon;
+namespace ReactiveBlazor;
 
 public abstract class IconBase: BaseComponent
 {

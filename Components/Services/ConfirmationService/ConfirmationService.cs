@@ -1,22 +1,62 @@
-﻿namespace ReactiveBlazor.Components.Confirmation;
+﻿namespace ReactiveBlazor;
 
-public class ConfirmationService : IConfirmationService
+public static class ConfirmationService
 {
-    private TaskCompletionSource<bool> _taskCompletionSource { get; set; } = new();
+    private static TaskCompletionSource<bool>? _currentConfirmation;
+    public static event Action<string>? OnConfirmationRequested;
 
-
-    public void Confirm(string message, Func<Task> OnApproved, Func<Task> OnCancel)
+    public static void HandleConfirmationResponse(bool confirmed)
     {
-        
+        if (_currentConfirmation != null)
+        {
+            _currentConfirmation.SetResult(confirmed);
+            _currentConfirmation = null;
+        }
     }
 
-    private void Yes()
+    public static async Task<bool> ConfirmAsync(string message)
     {
-        _taskCompletionSource.SetResult(true);
+        if (_currentConfirmation != null)
+        {
+            throw new InvalidOperationException("Another confirmation dialog is already active");
+        }
+
+        _currentConfirmation = new TaskCompletionSource<bool>();
+        OnConfirmationRequested?.Invoke($"you maybe have unsaved changes, Are you sure?");
+
+        return await _currentConfirmation.Task;
     }
 
-    private void No()
+    public static async Task<bool> ConfirmWithCallbackAsync(
+        string message,
+        Func<Task> onConfirm,
+        Func<Task>? onCancel = null)
     {
-        _taskCompletionSource.SetResult(false);
+        try
+        {
+            var isConfirmed = await ConfirmAsync(message);
+
+            if (isConfirmed)
+            {
+                await onConfirm();
+                return true;
+            }
+            else
+            {
+                if (onCancel != null)
+                {
+                    await onCancel();
+                }
+                return false;
+            }
+        }
+        catch (Exception)
+        {
+            if (onCancel != null)
+            {
+                await onCancel();
+            }
+            return false;
+        }
     }
 }

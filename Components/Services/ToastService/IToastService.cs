@@ -1,5 +1,5 @@
 ﻿
-namespace ReactiveBlazor.Components.Toast;
+namespace ReactiveBlazor;
 
 public interface IToastService : ISingleton, IDisposable
 {

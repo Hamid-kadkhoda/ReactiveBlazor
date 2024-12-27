@@ -1,4 +1,4 @@
-﻿namespace ReactiveBlazor.Components.Toast;
+﻿namespace ReactiveBlazor;
 
 public class ToastMessage
 {

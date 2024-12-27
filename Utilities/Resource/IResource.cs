@@ -1,4 +1,4 @@
-﻿namespace ReactiveBlazor.Utilities;
+﻿namespace ReactiveBlazor;
 
 public interface IResource
 {

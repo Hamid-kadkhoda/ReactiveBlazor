@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Components;
 
-namespace ReactiveBlazor.Components.Base;
+namespace ReactiveBlazor;
 
 public abstract class ButtonBase : BaseComponent
 {
@@ -22,6 +23,7 @@ public abstract class ButtonBase : BaseComponent
 
     protected string typeAttribute = "button";
 
+    [SuppressMessage("StyleCop", "IDE0044:Add readonly modifier", Justification = "Custom setter logic required")]
     [Parameter]
     public ButtonType Type
     {
@@ -41,6 +43,7 @@ public abstract class ButtonBase : BaseComponent
         }
     }
 
+    [SuppressMessage("StyleCop", "IDE0044:Add readonly modifier", Justification = "Custom setter logic required")]
     [Parameter]
     public SeverityType Severity
     {

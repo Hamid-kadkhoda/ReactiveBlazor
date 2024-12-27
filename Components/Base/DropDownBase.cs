@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace ReactiveBlazor.Components.Base;
+namespace ReactiveBlazor;
 
 public class DropDownBase<TValue> : BaseComponent
 {

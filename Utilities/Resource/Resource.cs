@@ -1,8 +1,7 @@
-﻿namespace ReactiveBlazor.Utilities;
+﻿namespace ReactiveBlazor;
+
 public class Resource<T> : IDisposable where T : class
 {
-    private readonly SemaphoreSlim _semaphore;
-
     private bool _disposed;
 
     private T? _Value { get; set; }
@@ -10,28 +9,19 @@ public class Resource<T> : IDisposable where T : class
     public Resource(T? value)
     {
         _Value = value;
-        _semaphore = new SemaphoreSlim(1, 1);
     }
-
+    
     public async Task<TResult> ExecuteAsync<TResult>(Func<T, Task<TResult>> operation)
     {
-        await _semaphore.WaitAsync();
-        try
-        {
-            return await operation(_Value!);
-        }
-        finally
-        {
-            _semaphore.Release();
-        }
+        return await operation(_Value!);
     }
 
     public void Dispose()
     {
         if (!_disposed)
         {
-            _semaphore.Dispose();
             _Value = null;
+            GC.SuppressFinalize(this);
             _disposed = true;
         }
     }

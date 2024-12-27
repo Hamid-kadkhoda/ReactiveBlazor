@@ -1,4 +1,4 @@
-﻿namespace ReactiveBlazor.Components.Models;
+﻿namespace ReactiveBlazor;
 
 public class TreeNode
 {
