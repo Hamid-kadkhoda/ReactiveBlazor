@@ -1,3 +1,25 @@
 ﻿@page "/"
 
 <PageTitle>Home</PageTitle>
+
+<Button Value="Add Tab" OnClick="@add"/>
+
+<hr/>
+
+<DynamicTab />
+
+
+@code {
+
+    [Inject] public TabManager tabManager { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        tabManager.AddTab(nameof(TestComponent1),true);
+    }
+
+    private void add()
+    {
+        tabManager.AddTab(nameof(TestComponent2));
+    }
+}

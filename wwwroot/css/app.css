@@ -4,6 +4,10 @@
 @import "/lib/primeflex/primeflex.css";
 @import "/lib/primeflex/themes/primeone-light.css";
 
+* {
+    transition: all 200ms ease-in-out;
+}
+
 body {
     padding: 0;
     margin: 0;

@@ -1,0 +1,93 @@
+﻿@namespace ReactiveBlazor
+
+@inherits BaseComponent
+
+<style>
+    .dynamic-tab {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dynamic-tab-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .dynamic-tab-header button {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+    .dynamic-tab-content {
+        margin-top: 0.5rem;
+        padding: 1rem;
+    }
+</style>
+
+<div class="dynamic-tab">
+    @if (tabManager.Tabs.Any())
+    {
+
+        <div class="dynamic-tab-header">
+            @foreach (var tab in tabManager.Tabs)
+            {
+                <button @onclick="() => OnActivateTab(tab)"
+                        class="@(tab.IsActive ? "bg-blue-400" : "")
+                        text-color p-2 font-bold">
+                    <span>@tab.Title</span>
+                    <span role="button"
+                    @onclick:stopPropagation
+                    @onclick:preventDefault
+                          @onclick="() => OnRemoveTab(tab)">
+                        <svg width="20" height="20" viewBox="0 0 20 20"
+                             fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round"
+                             class="icon icon-tabler icons-tabler-outline icon-tabler-x">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M18 6l-12 12" />
+                            <path d="M6 6l12 12" />
+                        </svg>
+                    </span>
+                </button>
+            }
+        </div>
+
+        <div class="dynamic-tab-content">
+            @foreach (var tab in tabManager.Tabs)
+            {
+                @if (tab.Disposable && tab.IsActive)
+                {
+                    <DynamicComponent Type="@tab.Content" />
+                }
+                @if (!tab.Disposable)
+                {
+                    <div class="@(tab.IsActive ? "block" : "hidden")">
+                        <DynamicComponent Type="@tab.Content" />
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>
+
+@code {
+
+    [Inject] public TabManager tabManager { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        tabManager.TabsChanged += StateHasChanged;
+    }
+
+    private void OnActivateTab(DynamicTabPanel tab)
+    {
+        tabManager.ActivateTab(tab);
+    }
+
+    private void OnRemoveTab(DynamicTabPanel tab)
+    {
+        tabManager.RemoveTab(tab);
+    }
+}
