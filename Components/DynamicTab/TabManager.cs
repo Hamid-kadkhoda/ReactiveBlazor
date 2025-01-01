@@ -10,13 +10,13 @@ public class TabManager
 
     public List<DynamicTabPanel> Tabs { get; set; } = new();
 
-    public void AddTab(string className, bool disposable = false)
+    public void AddTab(string className, string? title = null, bool disposable = false)
     {
         try
         {
             var tab = new DynamicTabPanel()
             {
-                Title = className,
+                Title = title ?? className,
                 Disposable = disposable,
                 Content = GetType(className)
             };
