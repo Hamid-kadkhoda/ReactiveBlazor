@@ -1,5 +1,24 @@
-﻿@namespace ReactiveBlazor
+﻿@using System.Reactive.Linq
+
+@namespace ReactiveBlazor
+
+<Dialog StyleClass="w-25rem" Header="Message" @bind-Visibility="@Visible">
+    <span class="text-primary">@Message</span>
+</Dialog>
 
 @code {
 
+    public bool Visible { get; set; }
+
+    public string? Message { get; set; }
+
+    protected override void OnInitialized()
+    {
+        MessageBox.OnChanged().Subscribe(m =>
+        {
+            Visible = true;
+            Message = m;
+            StateHasChanged();
+        });
+    }
 }

@@ -5,7 +5,7 @@
 @if (Visibility)
 {
     <div class="dialog-backdrop">
-        <div class="@visibilityStyleClass dialog">
+        <div style="@Style" class="@StyleClass @visibilityStyleClass dialog">
             <div class="dialog-header">
                 @if (HeaderContent != null)
                 {
@@ -21,7 +21,7 @@
                     </div>
                 }
             </div>
-            <div class="dialog-content">
+            <div class="@StyleClass dialog-content">
                 @ChildContent
             </div>
             @if (FooterContent != null)
