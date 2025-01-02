@@ -3,6 +3,7 @@
 @import "/css/initial-loading.css";
 @import "/lib/primeflex/primeflex.css";
 @import "/lib/primeflex/themes/primeone-light.css";
+@import "reactive-blazor.css";
 
 * {
     transition: all 200ms ease-in-out;
