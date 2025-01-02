@@ -11,4 +11,6 @@ public class DynamicSectionPanel
     public bool IsActive { get; set; }
 
     public bool Disposable { get; set; }
+
+    public bool IsDefault { get; set; }
 }

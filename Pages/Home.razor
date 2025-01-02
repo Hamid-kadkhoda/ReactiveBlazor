@@ -2,11 +2,17 @@
 
 <PageTitle>Home</PageTitle>
 
-<Button Value="Add Tab" OnClick="@add"/>
+<main class="p-3">
+    <FlexLayout>
+        <Button Value="Add Tab" OnClick="@addTab" />
 
-<hr/>
+        <Button Value="Add Sheet" OnClick="@addSheet" />
+    </FlexLayout>
 
-<DynamicTab />
+    <hr />
+
+    <DynamicTab />
+</main>
 
 
 @code {
@@ -15,12 +21,16 @@
 
     protected override void OnInitialized()
     {
-        tabManager.AddTab(nameof(TestComponent1),"first tab",true);
+        tabManager.AddTab(nameof(TestComponent1), true);
     }
 
-    private void add()
+    private void addTab()
     {
-        tabManager.AddTab(nameof(TestComponent2));
-        MessageBox.Show("Tab Added Successfully");
+        tabManager.AddTab(nameof(TestComponent2),true);
+    }
+
+    private void addSheet()
+    {
+        tabManager.AddSheet(nameof(TestComponent2));
     }
 }

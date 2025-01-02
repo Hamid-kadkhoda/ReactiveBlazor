@@ -6,7 +6,7 @@
 @import "reactive-blazor.css";
 
 * {
-    transition: all 200ms ease-in-out;
+    transition: all 100ms linear;
 }
 
 body {
