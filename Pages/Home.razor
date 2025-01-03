@@ -7,6 +7,8 @@
         <Button Value="Add Tab" OnClick="@addTab" />
 
         <Button Value="Add Sheet" OnClick="@addSheet" />
+
+        <Button Value="Chat With Deep Seek" OnClick="@(() => tabManager.AddTab(nameof(DeepSeek),true))" />
     </FlexLayout>
 
     <hr />
@@ -26,7 +28,7 @@
 
     private void addTab()
     {
-        tabManager.AddTab(nameof(TestComponent2),true);
+        tabManager.AddTab(nameof(TestComponent2), true);
     }
 
     private void addSheet()

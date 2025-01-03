@@ -1,0 +1,40 @@
+﻿
+div {
+    height: 100%;
+}
+
+.dynamic-tab {
+    display: flex;
+    flex-direction: column;
+}
+
+.dynamic-tab-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dynamic-tab-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+button[tab-sheet-button] {
+    display: flex;
+    color: var(--blue-500);
+    font-weight: 700;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: var(--blue-100);
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.dynamic-tab-content {
+    margin-block: 0.5rem;
+    height: 60vh;
+    padding: 1rem;
+    border: 1px solid #dedede;
+}
