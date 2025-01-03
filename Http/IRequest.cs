@@ -2,11 +2,9 @@
 
 public interface IRequest
 {
-    string Endpoint { get; }
+    public string Endpoint { get; }
 
-    string? QueryParams { get; set; }
+    public string? Fragments { get; set; }
 
-    string? Fragments { get; set; }
-
-    HttpMethod HttpMethod { get; }
+    public HttpMethod HttpMethod { get; }
 }

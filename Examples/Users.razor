@@ -1,0 +1,50 @@
+﻿@namespace ReactiveBlazor
+
+@inherits OwingSectionBase
+
+@attribute [Selector("First Component")]
+
+<DataGrid TItem="User" Items="@UserList" />
+
+<hr />
+
+<Button OnClick="() => this.CloseThisSheet()" Value="close sheet" Severity="SeverityType.Secondary" />
+
+@code {
+
+    private ICollection<User>? UserList { get; set; } = [];
+
+    public class GetUsersRequest : IRequest
+    {
+        public string Endpoint => "https://jsonplaceholder.typicode.com/users";
+
+        public string? Fragments { get; set; }
+
+        public HttpMethod HttpMethod => HttpMethod.Get;
+    }
+
+    public class User
+    {
+        public int Id { get; set; }
+
+        public string? Name { get; set; }
+
+        public string? Username { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? Phone { get; set; }
+
+        public string? Website { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserList = await http.SendAsync<ICollection<User>>(new GetUsersRequest());
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        Console.WriteLine("Users grid Disposed...");
+    }
+}

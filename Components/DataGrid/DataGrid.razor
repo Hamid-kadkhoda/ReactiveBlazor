@@ -7,32 +7,51 @@
 @typeparam TItem
 
 <div class="data-grid">
-    <table>
+    <table data-grid>
         <thead>
             <tr>
                 @foreach (var property in typeof(TItem).GetProperties())
                 {
                     <th>
                         <div class="column-header">
-                            @property.Name
-                            <button @onclick="() => SortBy(property.Name)">Sort</button>
-                            <input type="text"
-                                   @oninput="(e) => FilterBy(property.Name, e.Value?.ToString())"
-                                   placeholder="Filter..." />
+                            <span>@property.Name</span>
+                            <div class="column-header-filter">
+                                <button @onclick="() => SortBy(property.Name)">
+                                    <svg width="16" height="16"
+                                         viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="icon icon-tabler
+                                        icons-tabler-outline icon-tabler-arrows-down-up">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M17 3l0 18" />
+                                        <path d="M10 18l-3 3l-3 -3" />
+                                        <path d="M7 21l0 -18" />
+                                        <path d="M20 6l-3 -3l-3 3" />
+                                    </svg>
+
+                                </button>
+                                <input type="text"
+                                       @oninput="(e) => FilterBy(property.Name, e.Value?.ToString())"
+                                       placeholder="Filter..." />
+                            </div>
                         </div>
                     </th>
                 }
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in FilteredAndSortedItems)
+            @if (FilteredAndSortedItems != null)
             {
-                <tr>
-                    @foreach (var property in typeof(TItem).GetProperties())
-                    {
-                        <td>@property.GetValue(item)</td>
-                    }
-                </tr>
+                @foreach (var item in FilteredAndSortedItems)
+                {
+                    <tr>
+                        @foreach (var property in typeof(TItem).GetProperties())
+                        {
+                            <td class="px-2 py-1">@property.GetValue(item)</td>
+                        }
+                    </tr>
+                }
             }
         </tbody>
     </table>
@@ -40,9 +59,9 @@
 
 @code {
 
-    [Parameter] public IEnumerable<TItem> Items { get; set; } = [];
+    [Parameter] public IEnumerable<TItem>? Items { get; set; }
 
-    private IEnumerable<TItem> FilteredAndSortedItems => ApplySortingAndFiltering(Items);
+    private IEnumerable<TItem>? FilteredAndSortedItems => ApplySortingAndFiltering(Items);
 
     private Dictionary<string, string> Filters { get; set; } = new Dictionary<string, string>();
 
@@ -61,7 +80,6 @@
             SortColumn = columnName;
             SortAscending = true;
         }
-        StateHasChanged();
     }
 
     private void FilterBy(string columnName, string? filterValue)
@@ -74,11 +92,13 @@
         {
             Filters[columnName] = filterValue;
         }
-        StateHasChanged();
     }
 
-    private IEnumerable<TItem> ApplySortingAndFiltering(IEnumerable<TItem> items)
+    private IEnumerable<TItem>? ApplySortingAndFiltering(IEnumerable<TItem>? items)
     {
+
+        if (items == null) return null;
+
         var query = items.AsQueryable();
 
         foreach (var filter in Filters)

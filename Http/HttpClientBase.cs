@@ -1,9 +1,9 @@
-﻿using System.Text;
-using System.Text.Json;
+﻿using Newtonsoft.Json;
+using System.Text;
 
-namespace System.Net.Http;
+namespace ReactiveBlazor;
 
-public class HttpClientBase(HttpClient http): IHttpClientBase
+public class HttpClientBase(HttpClient http) : IHttpClientBase
 {
     public async Task<T?> SendAsync<T>(IRequest req)
     {
@@ -38,7 +38,7 @@ public class HttpClientBase(HttpClient http): IHttpClientBase
                     )
                 }.Data;
 
-                string jsonContent = JsonSerializer.Serialize(serializableObj);
+                string jsonContent = JsonConvert.SerializeObject(serializableObj);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                 request.Content = content;
             }
@@ -47,7 +47,7 @@ public class HttpClientBase(HttpClient http): IHttpClientBase
 
             var context = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<T>(context);
+            return JsonConvert.DeserializeObject<T>(context);
         }
         catch
         {

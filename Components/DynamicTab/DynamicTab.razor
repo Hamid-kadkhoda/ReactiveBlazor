@@ -59,15 +59,19 @@
             {
                 <div class="@(tab.IsActive ? "block" : "hidden")">
                     <div class="dynamic-tab-content">
-                        @if (tab.Sheets.Any())
-                        {
-                            @foreach (var sheet in tab.Sheets)
+                        <CascadingValue Name="ParentTab" Value="@tab">
+                            @if (tab.Sheets.Any())
                             {
-                                <div class="@(sheet.IsActive ? "block" : "hidden")">
-                                    <DynamicComponent Type="@sheet.Content" />
-                                </div>
+                                @foreach (var sheet in tab.Sheets)
+                                {
+                                    <div class="@(sheet.IsActive ? "block" : "hidden")">
+                                        <CascadingValue Name="ParentSheet" Value="@sheet">
+                                            <DynamicComponent Type="@sheet.Content" />
+                                        </CascadingValue>
+                                    </div>
+                                }
                             }
-                        }
+                        </CascadingValue>
                     </div>
                     <div class="dynamic-tab-footer">
                         @foreach (var sheet in tab.Sheets)

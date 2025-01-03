@@ -20,7 +20,7 @@ public class TabManager
         {
             var tab = new DynamicTabPanel()
             {
-                Title = className,
+                Title = GetTypeAttributeTitle(GetType(className)) ?? className,
                 Disposable = disposable,
             };
 
@@ -49,7 +49,7 @@ public class TabManager
         {
             var sheet = new DynamicSheetPanel()
             {
-                Title = className,
+                Title = GetTypeAttributeTitle(GetType(className)) ?? className,
                 Disposable = disposable,
                 Content = GetType(className)
             };
@@ -139,6 +139,18 @@ public class TabManager
                 ActivateSheet(ActiveTabSheets[index]);
             }
         }
+        NotifyTabsChanged();
+    }
+
+    private string? GetTypeAttributeTitle(Type? type)
+    {
+        if (type == null) return null;
+
+        var attr = type.GetCustomAttribute<SelectorAttribute>();
+
+        if (attr == null) return null;
+
+        return attr.Title;
     }
 
     private Type? GetType(string key)
