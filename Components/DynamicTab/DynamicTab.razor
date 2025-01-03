@@ -43,93 +43,43 @@
 <div class="dynamic-tab">
     @if (tabManager.Tabs.Any())
     {
-
         <div class="dynamic-tab-header">
             @foreach (var tab in tabManager.Tabs)
             {
-                <button tab-sheet-button @onclick="() => OnActivateTab(tab)"
-                        class="@(tab.IsActive ? "text-white bg-blue-500" : "")">
-                    <span>@tab.Title</span>
-                    <span role="button"
-                    @onclick:stopPropagation
-                    @onclick:preventDefault
-                          @onclick="() => OnRemoveTab(tab)">
-                        <svg width="20" height="20" viewBox="0 0 20 20"
-                             fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round"
-                             class="icon icon-tabler icons-tabler-outline icon-tabler-x">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M18 6l-12 12" />
-                            <path d="M6 6l12 12" />
-                        </svg>
-                    </span>
-                </button>
+                <DynamicTabNavButton OnRemove="() => OnRemoveTab(tab)"
+                                     OnClick="() => OnActivateTab(tab)"
+                                     IsActive="tab.IsActive"
+                                     Value="@tab.Title">
+                </DynamicTabNavButton>
             }
         </div>
 
         <div>
             @foreach (var tab in tabManager.Tabs)
             {
-                @if (tab.Disposable && tab.IsActive)
-                {
-                    <div>
+                <div class="@(tab.IsActive ? "block" : "hidden")">
+                    <div class="dynamic-tab-content">
                         @if (tab.Sheets.Any())
                         {
                             @foreach (var sheet in tab.Sheets)
                             {
-                                if (sheet.IsActive)
-                                {
+                                <div class="@(sheet.IsActive ? "block" : "hidden")">
                                     <DynamicComponent Type="@sheet.Content" />
-                                }
+                                </div>
                             }
                         }
                     </div>
                     <div class="dynamic-tab-footer">
                         @foreach (var sheet in tab.Sheets)
                         {
-                            <button tab-sheet-button>@sheet.Title</button>
+                            <DynamicTabNavButton OnRemove="() => OnRemoveSheet(sheet)"
+                                                 OnClick="() => OnActivateSheet(sheet)"
+                                                 IsActive="sheet.IsActive"
+                                                 Value="@sheet.Title">
+                            </DynamicTabNavButton>
                         }
                     </div>
-                }
-                @if (!tab.Disposable)
-                {
-                    <div class="@(tab.IsActive ? "block" : "hidden")">
-                        <div class="dynamic-tab-content">
-                            @if (tab.Sheets.Any())
-                            {
-                                @foreach (var sheet in tab.Sheets)
-                                {
-                                    if (sheet.IsActive)
-                                    {
-                                        <DynamicComponent Type="@sheet.Content" />
-                                    }
-                                }
-                            }
-                        </div>
-                        <div class="dynamic-tab-footer">
-                            @foreach (var sheet in tab.Sheets)
-                            {
-                                <button tab-sheet-button @onclick="() => OnActivateSheet(sheet)"
-                                        class="@(sheet.IsActive ? "text-white bg-blue-500" : "")">
-                                    <span>@sheet.Title</span>
-                                    <span role="button"
-                                    @onclick:stopPropagation
-                                    @onclick:preventDefault
-                                          @onclick="() => OnRemoveSheet(sheet)">
-                                        <svg width="20" height="20" viewBox="0 0 20 20"
-                                             fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="icon icon-tabler icons-tabler-outline icon-tabler-x">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M18 6l-12 12" />
-                                            <path d="M6 6l12 12" />
-                                        </svg>
-                                    </span>
-                                </button>
-                            }
-                        </div>
-                    </div>
-                }
+                </div>
             }
         </div>
     }

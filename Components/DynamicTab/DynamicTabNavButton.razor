@@ -1,0 +1,43 @@
+﻿@namespace ReactiveBlazor
+
+@inherits ButtonBase
+
+<style>
+    button[tab-sheet-button] {
+        display: flex;
+        color: var(--blue-500);
+        font-weight: 700;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background-color: var(--blue-100);
+        align-items: center;
+        gap: 0.2rem;
+    }
+</style>
+
+<button tab-sheet-button @onclick="@OnClick"
+        class="@(IsActive ? "text-white bg-blue-500" : "")">
+    <span>@Value</span>
+    <span role="button"
+    @onclick:stopPropagation
+    @onclick:preventDefault
+          @onclick="@OnRemove">
+        <svg width=" 20" height="20" viewBox="0 0 20 20"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"
+             class="icon icon-tabler icons-tabler-outline icon-tabler-x">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M18 6l-12 12" />
+            <path d="M6 6l12 12" />
+        </svg>
+    </span>
+</button>
+
+@code {
+
+    [Parameter] public bool IsActive { get; set; }
+
+    [Parameter] public EventCallback OnRemove { get; set; }
+
+}
