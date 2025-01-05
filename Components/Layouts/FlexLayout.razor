@@ -2,7 +2,7 @@
 
 @inherits LayoutBase
 
-<div class="flex gap-@Spacing 
+<div style="@Style" class="@StyleClass flex gap-@Spacing 
 @(Vertical ? "flex-column" : "align-items-center") 
 @(Full ? "w-full" : "")">
     @ChildContent

@@ -9,6 +9,8 @@ public abstract class OwingSectionBase : OwningComponentBase
 
     [Inject] protected IHttpClientBase http { get; set; } = default!;
 
+    [Parameter] public object? Data { get; set; }
+
     [CascadingParameter(Name = "ParentSheet")] protected DynamicSheetPanel SheetPanel { get; set; } = null!;
 
     [CascadingParameter(Name = "ParentTab")] protected DynamicTabPanel TabPanel { get; set; } = null!;

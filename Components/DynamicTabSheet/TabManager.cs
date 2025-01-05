@@ -43,7 +43,7 @@ public class TabManager
         }
     }
 
-    public void AddSheet(string className, bool disposable = false)
+    public void AddSheet(string className, object? data = null, bool disposable = false)
     {
         try
         {
@@ -51,6 +51,7 @@ public class TabManager
             {
                 Title = GetTypeAttributeTitle(GetType(className)) ?? className,
                 Disposable = disposable,
+                Data = data,
                 Content = GetType(className)
             };
             ActiveTabSheets.Add(sheet);
@@ -126,7 +127,9 @@ public class TabManager
         if (ActiveTab == null)
             return;
 
-        var index = ActiveTabSheets.IndexOf(sheet);
+        var FINDED_SHEET = ActiveTabSheets.First(sh => sh.Key == sheet.Key);
+
+        var index = ActiveTabSheets.IndexOf(FINDED_SHEET);
         ActiveTabSheets.RemoveAt(index);
         if (ActiveTabSheets.Count > 0)
         {

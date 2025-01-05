@@ -3,12 +3,19 @@
 <PageTitle>Home</PageTitle>
 
 <main class="p-3">
-    <FlexLayout>
-        <Button Value="Add Tab" OnClick="@addTab" />
+    <FlexLayout Full StyleClass="justify-content-between">
+        <FlexLayout>
+            <Button Value="Add Tab" OnClick="@addTab" />
 
-        <Button Value="Add Sheet" OnClick="@addSheet" />
+            <Button Value="Add Sheet" OnClick="@addSheet" />
 
-        <Button Value="Chat With Deep Seek" OnClick="@(() => tabManager.AddTab(nameof(DeepSeek),true))" />
+            <Button Value="Chat With Deep Seek" OnClick="@(() => tabManager.AddTab(nameof(DeepSeek),true))" />
+
+            <Button Value="Test Data Param" OnClick="@(() => tabManager.AddSheet(nameof(TestDataParam),Guid.NewGuid()))" />
+        </FlexLayout>
+        <FlexLayout>
+            <b class="text-gray-700">@(DateTime.UtcNow)</b>
+        </FlexLayout>
     </FlexLayout>
 
     <hr />

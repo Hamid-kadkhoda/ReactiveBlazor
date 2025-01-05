@@ -28,9 +28,14 @@
                                 {
                                     <div class="@(sheet.IsActive ? "block" : "hidden")">
                                         <CascadingValue Name="ParentSheet" Value="@sheet">
-                                            <DynamicComponent Type="@sheet.Content" />
-                                        </CascadingValue>
-                                    </div>
+                                            @{
+                                        var parameters = new Dictionary<string, object?>();
+                                        parameters.Add("Data", sheet.Data);
+
+                                        <DynamicComponent Parameters="@parameters" Type="@sheet.Content" />
+                                    }
+                                </CascadingValue>
+                            </div>
                                 }
                             }
                         </CascadingValue>

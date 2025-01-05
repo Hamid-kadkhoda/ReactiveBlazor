@@ -1,6 +1,6 @@
 ﻿namespace ReactiveBlazor;
 
-public class DynamicSectionPanel
+public abstract class DynamicSectionPanel
 {
     public Type? Content { get; set; }
 
@@ -11,6 +11,8 @@ public class DynamicSectionPanel
     public bool IsActive { get; set; }
 
     public bool Disposable { get; set; }
+
+    public object? Data { get; set; }
 
     public bool IsDefault { get; set; }
 }
