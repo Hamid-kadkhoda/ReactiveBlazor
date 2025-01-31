@@ -2,44 +2,4 @@
 
 <PageTitle>Home</PageTitle>
 
-<main class="p-3">
-    <FlexLayout Full StyleClass="justify-content-between">
-        <FlexLayout>
-            <Button Value="Add Tab" OnClick="@addTab" />
-
-            <Button Value="Add Sheet" OnClick="@addSheet" />
-
-            <Button Value="Chat With Deep Seek" OnClick="@(() => tabManager.AddTab(nameof(DeepSeek),true))" />
-
-            <Button Value="Test Data Param" OnClick="@(() => tabManager.AddSheet(nameof(TestDataParam),Guid.NewGuid()))" />
-        </FlexLayout>
-        <FlexLayout>
-            <b class="text-gray-700">@(DateTime.UtcNow)</b>
-        </FlexLayout>
-    </FlexLayout>
-
-    <hr />
-
-    <DynamicTab />
-</main>
-
-
-@code {
-
-    [Inject] public TabManager tabManager { get; set; } = default!;
-
-    protected override void OnInitialized()
-    {
-        tabManager.AddTab(nameof(TestComponent1), true);
-    }
-
-    private void addTab()
-    {
-        tabManager.AddTab(nameof(TestComponent2), true);
-    }
-
-    private void addSheet()
-    {
-        tabManager.AddSheet(nameof(Users));
-    }
-}
+<CreatePersonForm/>

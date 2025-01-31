@@ -1,0 +1,40 @@
+﻿@namespace ReactiveBlazor
+
+<section class="w-5 p-4">
+    <EditForm Model="@Person" OnSubmit="@OnSubmit">
+        <FlexLayout Vertical>
+            <TextBox @bind-Value="Person.FirstName" Label="FirstName" />
+            <TextBox @bind-Value="Person.LastName" Label="LastName" />
+            <Button Severity="SeverityType.Secondary"
+                    OnClick="() => AddressDialog = true">
+                Add Address
+            </Button>
+        </FlexLayout>
+        <hr />
+        <Button Type="ButtonType.Submit">Submit</Button>
+    </EditForm>
+</section>
+
+<Dialog @bind-Visibility="AddressDialog">
+    <AddressForm Value="Person.Address"
+                 ValueChanged="@OnValueChanged"
+                 OnCancel="() => AddressDialog = false" />
+</Dialog>
+
+@code {
+    private bool AddressDialog;
+
+    [SupplyParameterFromForm]
+    public PersonModel Person { get; set; } = new();
+
+    private void OnSubmit()
+    {
+        Console.WriteLine(JsonSerializer.Serialize(Person));
+    }
+
+    private void OnValueChanged(AddressModel args)
+    {
+        Person.Address = args;
+        AddressDialog = false;
+    }
+}

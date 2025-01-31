@@ -1,0 +1,42 @@
+﻿@namespace ReactiveBlazor
+
+<FlexLayout Vertical Spacing="3">
+    <TextBox @bind-Value="Value.City" Label="City" />
+    <TextBox @bind-Value="Value.Country" Label="Country" />
+    <TextBox @bind-Value="Value.State" Label="State" />
+    <FlexLayout>
+        <Button Value="Save" OnClick="OnSubmit" />
+
+        <Button Value="Cancel"
+                Severity="SeverityType.Secondary"
+                OnClick="OnCancelClicked" />
+
+    </FlexLayout>
+</FlexLayout>
+
+@code {
+
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    [Parameter] public AddressModel Value { get; set; } = default!;
+
+    public AddressModel Model { get; set; } = new();
+
+    [Parameter] public EventCallback<AddressModel> ValueChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Model = Value.DeepCopy();
+    }
+
+    private void OnCancelClicked()
+    {
+        Value = Model;
+        ValueChanged.InvokeAsync(Value);
+    }
+
+    private void OnSubmit()
+    {
+        ValueChanged.InvokeAsync(Value);
+    }
+}

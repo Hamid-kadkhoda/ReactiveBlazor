@@ -22,7 +22,6 @@ public abstract class ButtonBase : BaseComponent
 
     protected string typeAttribute = "button";
 
-    [SuppressMessage("StyleCop", "IDE0044:Add readonly modifier", Justification = "Custom setter logic required")]
     [Parameter]
     public ButtonType Type
     {
@@ -33,8 +32,8 @@ public abstract class ButtonBase : BaseComponent
             {
                 typeAttribute = value switch
                 {
-                    ButtonType.Button => "type",
-                    ButtonType.Submit => "button",
+                    ButtonType.Button => "button",
+                    ButtonType.Submit => "submit",
                     ButtonType.Reset => "reset",
                     _ => "button",
                 };
