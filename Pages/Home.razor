@@ -2,4 +2,34 @@
 
 <PageTitle>Home</PageTitle>
 
-<CreatePersonForm/>
+@inject DialogService DialogService
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+
+<button @ref="_triggerElement" @onclick="OpenDialog">Open Dialog</button>
+
+@code {
+    private ElementReference _triggerElement;
+    private DialogReference _dialogRef;
+
+    private async Task OpenDialog()
+    {
+        var parameters = new ComponentParameters
+        {
+            { "OnClose", EventCallback.Factory.Create(this, () => HandleDialogClosed()) }
+        };
+
+        _dialogRef = DialogService.Open<CreatePersonForm>(parameters);
+        await _dialogRef.Closed;
+    }
+
+    private void HandleDialogClosed()
+    {
+        // Handle dialog closed event
+    }
+
+    public void Dispose()
+    {
+        _dialogRef?.Dispose();
+    }
+}

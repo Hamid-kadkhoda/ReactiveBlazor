@@ -1,0 +1,91 @@
+﻿@namespace ReactiveBlazor
+
+@inject IJSRuntime JSRuntime
+
+<div class="dialog-container" style="z-index: @BackdropZIndex;">
+    <div class="dialog-backdrop" 
+         @onclick="@OnBackdropClick" 
+         style="z-index: @BackdropZIndex;"></div>
+    <div class="dialog-content" 
+         @onclick:stopPropagation="true"
+         style="z-index: @ContentZIndex;">
+        @ChildContent
+    </div>
+</div>
+
+<style>
+    .dialog-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dialog-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .dialog-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transform: translateY(-20px);
+        transition: transform 0.3s ease;
+    }
+
+    .dialog-visible .dialog-backdrop {
+        opacity: 1;
+    }
+
+    .dialog-visible .dialog-content {
+        transform: translateY(0);
+    }
+</style>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public bool DisableBackdropClick { get; set; }
+    [Parameter] public int DialogIndex { get; set; }
+
+    private ElementReference _dialogElement;
+    private bool _isVisible;
+
+    private int BackdropZIndex => 1000 + (DialogIndex * 2);
+    private int ContentZIndex => BackdropZIndex + 1;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_isVisible)
+        {
+            _isVisible = true;
+            StateHasChanged();
+            await JSRuntime.InvokeVoidAsync("blazorDialog.focusFirstInteractiveElement", _dialogElement);
+            await JSRuntime.InvokeVoidAsync("blazorDialog.addVisibleClass", _dialogElement);
+        }
+    }
+
+    private async Task CloseDialog()
+    {
+        await JSRuntime.InvokeVoidAsync("blazorDialog.removeVisibleClass", _dialogElement);
+        await Task.Delay(300); // Match transition duration
+        await OnClose.InvokeAsync();
+    }
+
+    private async Task OnBackdropClick()
+    {
+        if (!DisableBackdropClick) await CloseDialog();
+    }
+}

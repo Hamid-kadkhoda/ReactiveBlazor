@@ -1,0 +1,26 @@
+﻿@namespace ReactiveBlazor
+
+@* DialogContainer.razor *@
+@inject DialogService DialogService
+@implements IDisposable
+
+@foreach (var dialog in DialogService.ActiveDialogs.Select((d, i) => new { Dialog = d, Index = i }))
+{
+    <RefDialog @key="dialog.Dialog"
+            DialogIndex="@dialog.Index"
+            OnClose="@(() => DialogService.Close(dialog.Dialog))">
+        @dialog.Dialog.DialogContent
+    </RefDialog>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        DialogService.OnDialogsChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        DialogService.OnDialogsChanged -= StateHasChanged;
+    }
+}

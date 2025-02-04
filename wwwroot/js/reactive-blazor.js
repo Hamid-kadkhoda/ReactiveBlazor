@@ -24,6 +24,17 @@ async function RenderNewCanvasChart(identifier, labels, dataset, label, type) {
             }
         }
     });
-
-    console.log(chart)
 } 
+
+window.blazorDialog = {
+    addVisibleClass: (element) => {
+        element.classList.add('dialog-visible');
+    },
+    removeVisibleClass: (element) => {
+        element.classList.remove('dialog-visible');
+    },
+    focusFirstInteractiveElement: (container) => {
+        const focusable = container.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        focusable?.focus();
+    }
+};
